@@ -17,6 +17,7 @@ This repository does contain the current implementation for the status registry.
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributions and feedback](#contributions-and-feedback)
+- [Known Issues](#known-issues)
 - [License](#license)
 
 ## Overview
@@ -78,6 +79,10 @@ _Example_
 SECURITY_OAUTH2_JWT_ISSUERURIS_MYAUTHSERVER="https://www.example.com/auth"
 SECURITY_OAUTH2_JWT_ISSUERURIS_OTHERAUTHSERVER="https://www.other.example.com/auth"
 ```
+
+## Known Issues
+
+The swiyu Public Beta Trust Infrastructure was deliberately released at an early stage to enable future ecosystem participants. There may still be minor bugs or security vulnerabilities in the test system. We will publish them in the near future as ‘KnownIssues’ in this repository.
 
 ## Contributions and feedback
 
