@@ -1,0 +1,35 @@
+publiccodeYmlVersion: 0.4.0
+name: swiyu Status Registry Authoring Service
+applicationSuite: swiyu Trust Infrastructure
+url: https://github.com/swiyu-admin-ch/eidch-registry-status-authoring
+softwareVersion: 1.1.1
+releaseDate: 2025-03-13
+platforms:
+  - Linux
+categories:
+  - digital-citizenship
+  - identity-management
+usedBy:
+  - Federal Office of Justice
+  - Federal Office of Information Technology, Systems and Telecommunication
+  - Fedpol
+  - Astra
+developmentStatus: beta
+softwareType: standalone/backend
+description:
+  en:
+    localisedName: swiyu Status Registry Authoring Service
+    shortDescription: Authoring Service for the swiyu Status Registry
+    longDescription: The Base Registry serves as a publicly available registry of technical identifiers that represent entities using the infrastructure as issuers or verifiers. The authoring service provides all the write operations. 
+    apiDocumentation: https://swiyu-admin-ch.github.io/technology-stack/
+    features:
+      - Cryptographic methods to register, update and verify identifiers, in the form of DID's
+      - Manage Status Lists containing information related to credential validity
+legal:
+  license: MIT
+maintenance:
+  type: internal
+localisation:
+  localisationReady: true
+  availableLanguages:
+    - en
