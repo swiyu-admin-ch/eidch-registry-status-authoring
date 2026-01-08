@@ -2,6 +2,25 @@
 #
 # SPDX-License-Identifier: MIT
 
+server:
+  port: 8280  # dedicated within swiyu to avoid conflicts
+
+jeap:
+  monitor:
+    prometheus:
+      password: "{noop}prometheus"
+      user: "prometheus"
+  security:
+    oauth2:
+      resourceserver:
+        resource-id: bj-swiyu-ecosystem-portal-scs # Resource ID of the application as it is configured in oauth servers
+        authorization-server:
+          issuer: https://swiyu-oauth-mock-server-d.apps.p-szb-ros-shrd-npr-01.cloud.admin.ch
+        auth-servers: # Additional authorization servers
+          - issuer: https://auth-d.trust-infra.swiyu.admin.ch/realms/bj-swiyu-ecosystem
+          - issuer: https://auth-r.trust-infra.swiyu.admin.ch/realms/bj-swiyu-ecosystem-portal-scs
+          - issuer: http://localhost:8480 # mock server started locally
+
 spring:
   datasource:
     url: "jdbc:postgresql://localhost:5280/status-registry-db"
@@ -12,12 +31,21 @@ spring:
       enabled: true
       file: compose.yml
 
-security:
-  oauth2:
-    jwt:
-      issuer-uris:
-        dev-issuer: https://auth-d.trust-infra.swiyu.admin.ch/realms/bj-swiyu-ecosystem
-        ref-issuer: https://auth-r.trust-infra.swiyu.admin.ch/realms/bj-swiyu-ecosystem-portal-scs
+springdoc:
+  swagger-ui:
+    oauth:
+      client-id: ${jeap.security.oauth2.resourceserver.resource-id}
+
+logging:
+  level:
+    ch.admin.bit.jeap: DEBUG
+    ch.admin.bj.swiyu: DEBUG
+
+management:
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
 
 status-registry:
   dataUrlTemplate: "http://localhost:8290/api/v1/statuslist/{0}.{1}"

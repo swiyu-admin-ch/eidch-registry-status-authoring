@@ -2,16 +2,28 @@
 #
 # SPDX-License-Identifier: MIT
 
-server:
-  port: 8280
+jeap:
+  monitor:
+    prometheus:
+      password: "{noop}${MONITORING_BASIC_AUTH_PASSWORD}"
+      user: "${MONITORING_BASIC_AUTH_USERNAME}"
+  swagger:
+    status: OPEN
+  rest:
+    tracing:
+      uri-filter-pattern: .*/actuator/.*
+      full-response-details-in-message: false
+
+  # Security config NOTE: OAuth issuer can be configured via the following env variables:
+  #  - JEAP_SECURITY_OAUTH2_RESOURCESERVER_AUTHORIZATION-SERVER_ISSUER (default)
+  #  - JEAP_SECURITY_OAUTH2_RESOURCESERVER_AUTH-SERVERS_0_ISSUER (addtional can be added with index)
 
 spring:
   application:
-    name: status-registry-authoring-service
+    name: swiyu-status-registry-authoring-service
   flyway:
     locations:
       - classpath:db/migration/common
-      - classpath:db/migration/postgresql
     # Flyway creates automatically the default schema if it doesn't exist
     default-schema: ${spring.jpa.properties.hibernate.default_schema}
   datasource:
@@ -22,52 +34,22 @@ spring:
       hibernate:
         default_schema: data
         ddl-auto: validate
+    open-in-view: false
 springdoc:
-  api-docs:
-    path: /api-docs
-    enabled: "${INTEGRATED_WEB_DOCS_ENABLE:true}"
   swagger-ui:
-    path: /swagger-ui.html
-    enabled: "${INTEGRATED_WEB_DOCS_ENABLE:true}"
+    oauth:
+      client-id: ${spring.application.name}
+    try-it-out-enabled: true
   show-actuator: "${INTEGRATED_WEB_DOCS_ENABLE:true}"
 
 logging:
   level:
-    org:
-      springframework:
-        security: DEBUG
+    ch.admin.bit.jeap: INFO
+    ch.admin.bit.jeap.log.RestRequestTracer: DEBUG
+    ch.admin.bj.swiyu: INFO
 
-
-management:
-  endpoint:
-    health:
-      enabled: true
-      probes:
-        enabled: true
-  health:
-    livenessState:
-      enabled: true
-    readinessState:
-      enabled: true
-  endpoints:
-    web:
-      exposure:
-        include: health, info, prometheus
-
-#security:
-#  oauth2:
-#    jwt:
-#      issuer-uris:
-#        Here we can add properties with URIs pointing to OIDC compatible authentication servers
-#        my-auth-server: https://www.example.com/auth
 
 status-registry:
   dataUrlTemplate: "${STATUS_REGISTRY_DATA_URL}"
   authoringBaseUrl: "${STATUS_REGISTRY_AUTHORING_URL}"
 
-
-monitoring:
-  basic-auth:
-    enabled: ${MONITORING_BASIC_AUTH_ENABLED:false}
-    username: "${MONITORING_BASIC_AUTH_USERNAME:}"
-    password: "${MONITORING_BASIC_AUTH_PASSWORD:}"

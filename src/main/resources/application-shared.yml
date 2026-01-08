@@ -1,0 +1,13 @@
+# SPDX-FileCopyrightText: 2025 Swiss Confederation
+#
+# SPDX-License-Identifier: MIT
+
+#
+# The intent of the "shared" profile is to provide a convenient way to run other applications of SWIYU
+# so they are linked to each other and do not conflict with ports. E.g.
+# swiyu-registry-status-data-service
+#
+
+# Note:
+# - we don't have yet custom properties for this service when it runs in shared mode
+# - we still keep the shared profile so we have the same pattern on all of our services
