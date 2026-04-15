@@ -4,88 +4,19 @@ SPDX-FileCopyrightText: 2025 Swiss Confederation
 SPDX-License-Identifier: MIT
 -->
 
-![github-banner](https://github.com/swiyu-admin-ch/swiyu-admin-ch.github.io/blob/main/assets/images/github-banner.jpg)
+# Deprecated - Datastore Services and Libraries
 
-# Datastore Services and Libraries
+This repository will be no longer maintained.
 
-The datastore services are the backbone of the swiss SSI inspired ecosystem.
-This repository does contain the current implementation for the status registry.
+The code has been divided in different services:
 
-## Table of Contents
+## swiyu Base Registry
 
-- [Overview](#Overview)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributions and feedback](#contributions-and-feedback)
-- [License](#license)
+- [swiyu Core Bore Business Service](https://github.com/swiyu-admin-ch/swiyu-core-business-service)
+- [swiyu Registry Identifier Data Service](https://github.com/swiyu-admin-ch/swiyu-registry-identifier-data-service)
+- [swiyu Registry Status Data Service](https://github.com/swiyu-admin-ch/swiyu-registry-status-data-service)
 
-## Overview
+### swiyu Trust Registry
 
-For a general overview of the public beta environment and its components, please check
-the [Public Beta context](https://swiyu-admin-ch.github.io/open-source-components/#public-beta).
-A datastore service always includes 2 sub services:
-
-1. The authoring service, which essentially provides all the write operations.  
-   Those should only be available to specified authorized systems like the controller system provided by the swiss gov.
-2. The data service, which provides all the protocol conform read operations.
-   Therefore we do require a strict separation of write operations in the code, so while the data models are shared
-   through
-   the shared libraries services and repositories are not shared.
-
-## Installation
-
-> [!NOTE]
-> Starting the service with the local profile does not connect the data and authoring services. It only serves to start
-> this service locally.
-
-To install docker please follow the instructions on the respective pages.
-
-In order to start the service locally, run:
-
-```shell
-./mvnw spring-boot:run -Dspring-boot.run.profiles=local
-```
-
-The openapi definition can then be found [here](http://localhost:8280/swagger-ui.html)
-
-Note: if you want to run the application alongside with the other services of SWIYU, you can run
-
-```shell
-./mvnw spring-boot:run -Dspring-boot.run.profiles=local,shared
-```
-
-## Usage
-
-### Auth
-
-The data service is always unprotected as all data on the registers should be readable by everyone.  
-The authoring services do need protection, which is as of now handled by OAuth2.0.  
-We do recommend to add mTLS authentication to your infrastructure endpoints.
-
-#### OAuth configuration
-
-This service supports OAuth Multi-Tenancy. This means more than one OAuth authorization server can be used.
-The authorization servers must be OpenID Connect compliant.
-
-Trusted authorization services can be added under the property `spring.security.oauth2.trusted-oauth-issuers.*`
-
-This can also be done using spring environment variables.
-`SECURITY_OAUTH2_JWT_ISSUERURIS_*`
-
-_Example_
-
-```
-SECURITY_OAUTH2_JWT_ISSUERURIS_MYAUTHSERVER="https://www.example.com/auth"
-SECURITY_OAUTH2_JWT_ISSUERURIS_OTHERAUTHSERVER="https://www.other.example.com/auth"
-```
-
-## Contributions and feedback
-
-The code for this repository is developed privately and will be released after each sprint. The published code can
-therefore only be a snapshot of the current development and not a thoroughly tested version. However, we welcome any
-feedback on the code regarding both the implementation and security aspects. Please follow the guidelines for
-contributing found in [CONTRIBUTING.md](/CONTRIBUTING.md).
-
-## License
-
-This project is licensed under the terms of the MIT license. See the [LICENSE](/LICENSE) file for details.
+- [swiyu Registry Trust Data Service](https://github.com/swiyu-admin-ch/swiyu-registry-trust-data-service)
+- swiyu Trust Management Service (not yet published)
